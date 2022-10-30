@@ -3,7 +3,7 @@ import subprocess
 
 class CompileJava:
     def __init__(self, code, id) -> None:
-        self.file_name = "code-" + str(id) + ".java"
+        self.file_name = "codes/code-" + str(id) + ".java"
         self.code = code
     
     def to_file(self):
