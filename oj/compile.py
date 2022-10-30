@@ -1,10 +1,12 @@
 import subprocess
-
+import os
+import time
 
 class CompileJava:
     def __init__(self, code, id) -> None:
-        self.file_name = "codes/code-" + str(id) + ".java"
+        self.file_name = "code-" + str(id) + ".java"
         self.code = code
+        self.retry_count = 5
     
     def to_file(self):
         try:
@@ -24,6 +26,13 @@ class CompileJava:
             out = ""
             err = "error compiling: " + str(e)    
             return out, err
+
+        while not os.path.isfile("HelloWorld.class"):
+            self.retry_count -= 1
+            time.sleep(.1)
+            print("retrying--- ", self.retry_count)
+            if self.retry_count < 1:
+                break
 
         run_cmd = "/usr/bin/java HelloWorld"
         try:
